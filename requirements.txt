@@ -6,5 +6,7 @@ requests
 flask-heroku
 gunicorn
 stripe
-pandas
-scikit-learn
+tensorflow
+opencv-python
+numpy
+pybase64

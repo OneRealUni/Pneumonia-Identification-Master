@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block body %}
+{% include "navbar.html" %}
+
+<head>
+  <meta charset='utf-8'>
+  <link rel='stylesheet' href='../static/css/style.css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src='../static/js/scripts.js'></script>
+</head>
+
+<section class="hero is-primary is-bold is-large">
+  <div class="hero-body" style="padding-top: 20px">
+    <div style="float: right;">
+      <h2>Monthly service for $10.00</h2>
+      {% if not user.active %}
+      <form action="/charge" method="post">
+        <script src="https://checkout.stripe.com/checkout.js"
+                class="stripe-button"
+                data-key="pk_test_9qnorLWUQILDlpMbGFjx1jM300ESwEvbGe"
+                data-description="A payment for PNEUMONIA"
+                data-name="Pnuemonia.com"
+                data-image=""
+                data-amount="1000">
+        </script>
+      </form>
+      {% endif %}
+      {% if user.active %}
+      <div><span>already done</span></div>
+      {% endif %}
+    </div>
+    <div>
+      {% if user.active %}
+      <script type="text/javascript">
+        function display(){
+          var x = $("#imageUpload").value();
+          alert(x);
+        }
+      </script>
+      <form id="upload-file" action={{ url_for('analyze') }} method="post" enctype="multipart/form-data" onSubmit="return display()">
+        <label for="imageUpload" class="upload-label">
+          Choose...
+        </label>
+        <input class="choose-file-button" type="file" name="imfile" accept=".jpeg, .png"></br></br>
+        <div class="image-section" style="display:none;">
+          <div>
+            <button type="button" class="upload-label" id="btn-predict">Pneumonia Identification</button>
+          </div>
+        </div>
+        <input class="analyze-button" type="submit" name="submit" value="Analyse">
+      </form>
+      {% endif %}
+      {% if not user.active %}
+      <div><span>Activate subscription with payment</span></div>
+      {% endif %}
+
+    </div>
+    <div class="loader" style="display:none;"></div>
+    <h1 id="result">
+      <span> </span>
+    </h1>
+    <div style="padding-top: 40px">
+
+    <div class='center'>
+      <div class='title'>Pneumonia Identification</div>
+      <p>
+        <strong>Use Chest X-Ray Images (Kaggle)</strong>
+      </p>
+      <div class='content'>
+        <div>
+
+        </div>
+        <div class='result-label'>
+          <label id='result-label'></label>
+        </div>
+      </div>
+    </div>
+
+    </div>
+  </div>
+
+
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="../static/js/scripts.js"></script>
+{% endblock %}

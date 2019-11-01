@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 
 def initialize_model():
-    model = tf.keras.models.load_model('trained_model/v3_weights.h5')
+    model = tf.keras.models.load_model('./trained_model/v3_weights.h5')
     return model
 
 def get_image(b_img):
